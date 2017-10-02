@@ -12,11 +12,21 @@
     float: right;
 }
 
-svg {
+#properties {
+	position: absolute;
+	margin: 0 5px 0 5px;
+}
+
+svg#graph {
     display: block;
     margin: 0 auto;
     box-shadow: 2px 1px 5px #ccc;
     border-radius: 3px;
+}
+
+svg.legend {
+	margin: 0 5px 0 0;
+	vertical-align: middle;
 }
 
 .links line {
