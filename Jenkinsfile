@@ -1,12 +1,16 @@
 pipeline {
     agent { label 'docker' }
 
+    environment {
+        GITLAB_TOKEN = credentials('collaboration-graph-gitlab-token')
+    }
+
     options {
         gitLabConnection('gitlab')
         buildDiscarder(logRotator(numToKeepStr: '10'))
     }
     triggers {
-        gitlab(triggerOnPush: true, triggerOnMergeRequest: true, branchFilterType: 'All')
+        gitlab(triggerOnPush: true, triggerOnMergeRequest: true, branchFilterType: 'All', secretToken: env.GITLAB_TOKEN)
         cron('H 8-18 * * 1-5')
     }
 
@@ -17,6 +21,9 @@ pipeline {
         }
         failure {
             updateGitlabCommitStatus name: env.JOB_NAME, state: 'failed'
+        }
+        aborted {
+            updateGitlabCommitStatus name: env.JOB_NAME, state: 'canceled'
         }
     }
 
@@ -42,7 +49,7 @@ pipeline {
             }
             steps {
                 withCredentials([file(credentialsId: 'data-analysis-config', variable: 'ANALYSIS_CONFIGURATION')]) {
-                    sh '/bin/bash -c "rm -rf $PWD/output && mkdir $PWD/output && cd /home/docker && cp $ANALYSIS_CONFIGURATION config.yml && Rscript report.r --report project_members --interval \'1 month\' --log INFO --output $PWD/output"'
+                    sh '/bin/bash -c "rm -rf $PWD/output && mkdir $PWD/output && cd /home/docker && Rscript report.r --report project_members --interval \'1 month\' --log INFO --config $ANALYSIS_CONFIGURATION --output $PWD/output"'
                 }
             }
         }
@@ -54,11 +61,14 @@ pipeline {
                 }
             }
             steps {
-                sh 'rm -rf public/data/'
-                sh 'mv output/ public/data/'
-                sh 'rm -rf node_modules/'
-                sh 'ln -s /usr/src/app/node_modules .'
-                sh 'npm run production -- --context=$PWD'
+                withCredentials([file(credentialsId: 'collaboration-graph-config', variable: 'COLLABORATION_GRAPH_CONFIGURATION')]) {
+                    sh 'rm -rf public/data/'
+                    sh 'mv output/ public/data/'
+                    sh 'rm -rf node_modules/'
+                    sh 'ln -s /usr/src/app/node_modules .'
+                    sh 'cp $COLLABORATION_GRAPH_CONFIGURATION config.json'
+                    sh 'npm run production -- --context=$PWD'
+                }
             }
         }
     }
