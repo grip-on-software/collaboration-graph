@@ -61,11 +61,14 @@ pipeline {
                 }
             }
             steps {
-                sh 'rm -rf public/data/'
-                sh 'mv output/ public/data/'
-                sh 'rm -rf node_modules/'
-                sh 'ln -s /usr/src/app/node_modules .'
-                sh 'npm run production -- --context=$PWD'
+                withCredentials([file(credentialsId: 'collaboration-graph-config', variable: 'COLLABORATION_GRAPH_CONFIGURATION')]) {
+                    sh 'rm -rf public/data/'
+                    sh 'mv output/ public/data/'
+                    sh 'rm -rf node_modules/'
+                    sh 'ln -s /usr/src/app/node_modules .'
+                    sh 'cp $COLLABORATION_GRAPH_CONFIGURATION config.json'
+                    sh 'npm run production -- --context=$PWD'
+                }
             }
         }
     }
