@@ -1,12 +1,16 @@
 pipeline {
     agent { label 'docker' }
 
+    environment {
+        GITLAB_TOKEN = credentials('collaboration-graph-gitlab-token')
+    }
+
     options {
         gitLabConnection('gitlab')
         buildDiscarder(logRotator(numToKeepStr: '10'))
     }
     triggers {
-        gitlab(triggerOnPush: true, triggerOnMergeRequest: true, branchFilterType: 'All')
+        gitlab(triggerOnPush: true, triggerOnMergeRequest: true, branchFilterType: 'All', secretToken: env.GITLAB_TOKEN)
         cron('H 8-18 * * 1-5')
     }
 
@@ -17,6 +21,9 @@ pipeline {
         }
         failure {
             updateGitlabCommitStatus name: env.JOB_NAME, state: 'failed'
+        }
+        aborted {
+            updateGitlabCommitStatus name: env.JOB_NAME, state: 'canceled'
         }
     }
 
