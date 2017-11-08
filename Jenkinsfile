@@ -11,13 +11,12 @@ pipeline {
     }
     triggers {
         gitlab(triggerOnPush: true, triggerOnMergeRequest: true, branchFilterType: 'All', secretToken: env.GITLAB_TOKEN)
-        cron('H 8-18 * * 1-5')
+        cron(env.VISUALIZATION_CRON)
     }
 
     post {
         success {
             publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'public', reportFiles: 'index.html', reportName: 'Visualization', reportTitles: ''])
-            updateGitlabCommitStatus name: env.JOB_NAME, state: 'success'
         }
         failure {
             updateGitlabCommitStatus name: env.JOB_NAME, state: 'failed'
@@ -28,9 +27,18 @@ pipeline {
     }
 
     stages {
-        stage('Build') {
+        stage('Start') {
+            when {
+                expression {
+                    currentBuild.rawBuild.getCause(hudson.triggers.TimerTrigger$TimerTriggerCause) == null
+                }
+            }
             steps {
                 updateGitlabCommitStatus name: env.JOB_NAME, state: 'running'
+            }
+        }
+        stage('Build') {
+            steps {
                 sh 'docker build -t $DOCKER_REGISTRY/gros-collaboration-graph .'
             }
         }
@@ -69,6 +77,16 @@ pipeline {
                     sh 'cp $COLLABORATION_GRAPH_CONFIGURATION config.json'
                     sh 'npm run production -- --context=$PWD'
                 }
+            }
+        }
+        stage('Status') {
+            when {
+                expression {
+                    currentBuild.rawBuild.getCause(hudson.triggers.TimerTrigger$TimerTriggerCause) == null
+                }
+            }
+            steps {
+                updateGitlabCommitStatus name: env.JOB_NAME, state: 'success'
             }
         }
     }
