@@ -1,9 +1,29 @@
-let mix = require('laravel-mix');
+let fs = require('fs'),
+    mix = require('laravel-mix');
 
-mix.js('lib/index.js', 'public/bundle.js')
+let config = path.resolve(__dirname, 'config.json');
+if (!fs.existsSync(config)) {
+    config = path.resolve(__dirname, 'lib/config.json');
+}
+
+Mix.paths.setRootPath(__dirname);
+mix.setPublicPath('public/')
+    .setResourceRoot('')
+    .js('lib/index.js', 'public/bundle.js')
     .browserSync({
         proxy: false,
-        server: 'public'
+        server: 'public',
+        files: [
+            'public/**/*.js',
+            'public/**/*.css'
+        ]
+    })
+    .webpackConfig({
+        resolve: {
+            alias: {
+                'config.json$': config
+            }
+        }
     });
 
 // Full API

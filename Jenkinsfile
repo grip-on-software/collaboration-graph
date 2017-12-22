@@ -39,7 +39,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'docker build -t $DOCKER_REGISTRY/gros-collaboration-graph .'
+                sh 'docker build -t $DOCKER_REGISTRY/gros-collaboration-graph . --build-arg NPM_REGISTRY=$NPM_REGISTRY'
             }
         }
         stage('Push') {
@@ -75,7 +75,7 @@ pipeline {
                     sh 'rm -rf node_modules/'
                     sh 'ln -s /usr/src/app/node_modules .'
                     sh 'cp $COLLABORATION_GRAPH_CONFIGURATION config.json'
-                    sh 'npm run production -- --context=$PWD'
+                    sh 'npm run production -- --env.mixfile=$PWD/webpack.mix.js'
                 }
             }
         }
