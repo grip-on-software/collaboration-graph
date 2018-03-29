@@ -1,3 +1,6 @@
 {
-    "hostname": ""
+    "encrypt_url": "/encrypt/",
+    "visualization_url": "/",
+    "path": ".",
+    "lower_names": ["de", "den", "der", "het", "van"]
 }

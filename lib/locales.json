@@ -1,0 +1,52 @@
+{
+    "en": {
+        "language": "English",
+        "node-types": {
+            "project": "Projects",
+            "support-team": "Support teams",
+            "developer": "Developers",
+            "external": "External people",
+            "support-member": "Support members",
+            "other": "Other people",
+            "link": "Links"
+        },
+        "messages": {
+            "timelapse": "Time lapse",
+            "timelapse-complete": "Complete",
+            "pause-title": "Pause",
+            "play-title": "Play",
+            "stop-title": "Stopped",
+            "speed-slower-title": "Slower",
+            "speed-faster-title": "Faster",
+            "toggle-extern": "External",
+            "toggle-extern-title": "Exclude external people from the graph",
+            "search-placeholder": "Search by name",
+            "search-invalid": "Enter a valid name"
+        }
+    },
+    "nl": {
+        "language": "Nederlands",
+        "node-types": {
+            "project": "Projecten",
+            "support-team": "Supportteams",
+            "developer": "Developers",
+            "external": "Externe personen",
+            "support-member": "Supportleden",
+            "other": "Andere personen",
+            "link": "Links"
+        },
+        "messages": {
+            "timelapse": "Timelapse",
+            "timelapse-complete": "Voltooid",
+            "pause-title": "Pauzeren",
+            "play-title": "Afspelen",
+            "stop-title": "Gestopt",
+            "speed-slower-title": "Langzamer",
+            "speed-faster-title": "Sneller",
+            "toggle-extern": "Extern",
+            "toggle-extern-title": "Externe personen weglaten uit de graaf",
+            "search-placeholder": "Zoek op naam",
+            "search-invalid": "Vul een geldige naam in"
+        }
+    }
+}
