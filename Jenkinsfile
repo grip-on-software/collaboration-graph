@@ -2,6 +2,7 @@ pipeline {
     agent { label 'docker' }
 
     environment {
+        IMAGE_TAG = env.BRANCH_NAME.replaceFirst('^master$', 'latest')
         GITLAB_TOKEN = credentials('collaboration-graph-gitlab-token')
         SCANNER_HOME = tool name: 'SonarQube Scanner 3', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
     }
@@ -16,9 +17,6 @@ pipeline {
     }
 
     post {
-        success {
-            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'public', reportFiles: 'index.html', reportName: 'Visualization', reportTitles: ''])
-        }
         failure {
             updateGitlabCommitStatus name: env.JOB_NAME, state: 'failed'
         }
@@ -40,7 +38,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'docker build -t $DOCKER_REGISTRY/gros-collaboration-graph . --build-arg NPM_REGISTRY=$NPM_REGISTRY'
+                sh 'docker build -t $DOCKER_REGISTRY/gros-collaboration-graph:$IMAGE_TAG . --build-arg NPM_REGISTRY=$NPM_REGISTRY'
             }
         }
         stage('SonarQube Analysis') {
@@ -62,6 +60,14 @@ pipeline {
             }
         }
         stage('Collect') {
+            when {
+                anyOf {
+                    branch 'master'
+                    expression {
+                        currentBuild.rawBuild.getCause(hudson.triggers.TimerTrigger$TimerTriggerCause) == null
+                    }
+                }
+            }
             agent {
                 docker {
                     image '$DOCKER_REGISTRY/gros-data-analysis-dashboard'
@@ -75,9 +81,17 @@ pipeline {
             }
         }
         stage('Visualize') {
+            when {
+                anyOf {
+                    branch 'master'
+                    expression {
+                        currentBuild.rawBuild.getCause(hudson.triggers.TimerTrigger$TimerTriggerCause) == null
+                    }
+                }
+            }
             agent {
                 docker {
-                    image '$DOCKER_REGISTRY/gros-collaboration-graph'
+                    image '$DOCKER_REGISTRY/gros-collaboration-graph:$IMAGE_TAG'
                     reuseNode true
                 }
             }
@@ -91,6 +105,7 @@ pipeline {
                     sh 'cp $COLLABORATION_GRAPH_CONFIGURATION config.json'
                     sh 'npm run production -- --env.mixfile=$PWD/webpack.mix.js'
                 }
+                publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'public', reportFiles: 'index.html', reportName: 'Visualization', reportTitles: ''])
             }
         }
         stage('Status') {
