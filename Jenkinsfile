@@ -102,7 +102,6 @@ pipeline {
                     sh 'mv output/ public/data/'
                     sh 'rm -rf node_modules/'
                     sh 'ln -s /usr/src/app/node_modules .'
-                    sh 'cp $COLLABORATION_GRAPH_CONFIGURATION config.json'
                     sh 'npm run production -- --env.mixfile=$PWD/webpack.mix.js'
                 }
                 publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'public', reportFiles: 'index.html', reportName: 'Visualization', reportTitles: ''])
