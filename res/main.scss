@@ -10,27 +10,37 @@
     margin-right: 10px;
 }
 
+.control {
+    &.has-icons-left,
+    &.has-icons-right {
+        .icon {
+            pointer-events: initial;
+            cursor: pointer;
+        }
+    }
+}
+
 #properties {
-	position: absolute;
-	margin: 0 5px 0 5px;
+    position: absolute;
+    margin: 0 5px 0 5px;
 }
 
 svg#graph {
     display: block;
-	width: 100%;
-	height: 100%;
+    width: 100%;
+    height: 100%;
 }
 #container {
-	width: 75vw;
-	height: 80vh;
+    width: 75vw;
+    height: 80vh;
     margin: 0 auto;
     box-shadow: 2px 1px 5px #ccc;
     border-radius: 3px;
 }
 
 svg.legend {
-	margin: 0 5px 0 0;
-	vertical-align: middle;
+    margin: 0 5px 0 0;
+    vertical-align: middle;
 }
 
 .links line {
@@ -50,13 +60,13 @@ svg.legend {
 }
 
 .buttons.has-addons .button.tooltip {
-	z-index: 9999;
+    z-index: 9999;
 }
 .tooltip {
-	&::before, &::after {
-		transition: opacity .5s ease;
-		opacity: 0;
-      	content: '';
-		position: absolute;
-	}
+    &::before, &::after {
+        transition: opacity .5s ease;
+        opacity: 0;
+        content: '';
+        position: absolute;
+    }
 }
