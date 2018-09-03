@@ -1,3 +1,6 @@
+@import "node_modules/bulma/bulma";
+@import "node_modules/bulma-tooltip/dist/css/bulma-tooltip";
+
 #options {
     width: 960px;
     margin: 10px auto 10px auto;
@@ -5,11 +8,6 @@
 
 #options > *:not(:last-child) {
     margin-right: 10px;
-}
-
-#options h3 {
-    display: inline-block;
-    float: right;
 }
 
 #properties {
@@ -49,4 +47,16 @@ svg.legend {
   pointer-events: none;
   font: 10px sans-serif;
   text-anchor: middle;
+}
+
+.buttons.has-addons .button.tooltip {
+	z-index: 9999;
+}
+.tooltip {
+	&::before, &::after {
+		transition: opacity .5s ease;
+		opacity: 0;
+      	content: '';
+		position: absolute;
+	}
 }

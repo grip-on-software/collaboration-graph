@@ -13,6 +13,8 @@
         "messages": {
             "timelapse": "Time lapse",
             "timelapse-complete": "Complete",
+            "timelapse-title": "Show the state of the network through time",
+            "timelapse-complete-title": "Return to the overall network",
             "pause-title": "Pause",
             "play-title": "Play",
             "stop-title": "Stopped",
@@ -21,6 +23,7 @@
             "toggle-extern": "External",
             "toggle-extern-title": "Exclude external people from the graph",
             "search-placeholder": "Search by name",
+            "search-title": "Search a project or person by their common name",
             "search-invalid": "Enter a valid name"
         }
     },
@@ -38,6 +41,8 @@
         "messages": {
             "timelapse": "Timelapse",
             "timelapse-complete": "Voltooid",
+            "timelapse-title": "De toestand van het network over tijd tonen",
+            "timelapse-complete-title": "Terugkeren naar het algemene netwerk",
             "pause-title": "Pauzeren",
             "play-title": "Afspelen",
             "stop-title": "Gestopt",
@@ -46,6 +51,7 @@
             "toggle-extern": "Extern",
             "toggle-extern-title": "Externe personen weglaten uit de graaf",
             "search-placeholder": "Zoek op naam",
+            "search-title": "Een project or persoon opzoeken op hun normale naam",
             "search-invalid": "Vul een geldige naam in"
         }
     }
