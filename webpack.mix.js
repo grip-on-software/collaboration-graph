@@ -12,10 +12,15 @@ if (!fs.existsSync(config)) {
 }
 
 const configuration = _.mapValues(JSON.parse(fs.readFileSync(config)),
-    value => value.replace('$organization',
-        typeof process.env.VISUALIZATION_ORGANIZATION !== 'undefined' ?
-        process.env.VISUALIZATION_ORGANIZATION : ''
-    )
+    value => {
+        if (!_.isString(value)) {
+            return value;
+        }
+        return value.replace('$organization',
+            typeof process.env.VISUALIZATION_ORGANIZATION !== 'undefined' ?
+            process.env.VISUALIZATION_ORGANIZATION : ''
+        );
+    }
 );
 
 Mix.paths.setRootPath(__dirname);
