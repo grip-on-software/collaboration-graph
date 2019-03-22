@@ -1,22 +1,28 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>Collaboration Graph</title>
+        <title data-message="title">Collaboration Graph</title>
 
         <link rel="stylesheet" href="{{ visualization_url }}navbar.css">
     </head>
     <body>
-    	<nav class="navbar is-link" role="navigation"
-    	aria-label="main navigation" id="navbar">
-    	</nav>
+        <nav class="navbar is-link" role="navigation"
+        aria-label="main navigation" id="navbar">
+        </nav>
 
-        <div id="options" class="columns is-gapless is-vcentered"></div>
-        <div id="properties"></div>
+        <main role="main">
+            <div id="options" class="columns is-gapless is-vcentered">
+                <div class="column is-narrow is-sr-only">
+                    <h1 data-message="title">Collaboration Graph</h1>
+                </div>
+            </div>
+            <div id="properties"></div>
 
-        <div id="container">
-			<svg id="graph" width="960" height="600"></svg>
-		</div>
+            <div id="container">
+                <svg id="graph" width="960" height="600"></svg>
+            </div>
+        </main>
 
     <script type="text/javascript" src="{{ visualization_url }}manifest.js"></script>
     <script type="text/javascript" src="{{ visualization_url }}vendor.js"></script>
