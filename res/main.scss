@@ -63,6 +63,12 @@ svg.legend {
     z-index: 9999;
 }
 .tooltip {
+    &:not(:hover):not(.has-tooltip-active) {
+        &::before, &::after {
+            opacity: 0;
+            visibility: hidden;
+        }
+    }
     &::before, &::after {
         transition: opacity .5s ease;
         opacity: 0;
