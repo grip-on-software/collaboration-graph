@@ -1,5 +1,5 @@
 bundle.js*
-/config.json
+/config*.json
 node_modules
 data/
 output/

@@ -11,11 +11,13 @@ settings in that file. The current configuration options are:
 - `encrypt_url`: The URL prefix for the encryption endpoint server to connect 
   to request the encrypted version of a name for searching purposes. The server 
   must have this JSON endpoint, when given the unencrypted `value` in a query 
-  string, provide a result, which is a JSON object containing two items: the 
-  the encrypted variant of the provided value with the key `value`, and the 
-  encryption level of this variant with the `ecncryption` key. If the URL is an 
-  empty string, then searching for persons with encrypted names in the graph is 
-  not possible.
+  string, provide a result, which is a JSON object containing at least two 
+  items: the encrypted variant of the provided value with the key `value`, and 
+  the encryption level of this variant with the `ecncryption` key. The 
+  controller API in the `data-gathering` repository has an `encrypt` endpoint 
+  that is compatible with this expected response. If the URL is an empty 
+  string, then searching for persons with encrypted names in the graph is not 
+  possible.
 - `visualization_url`: The URL to the visualization hub. This may include 
   a protocol and domain name, but does not need to in case all the 
   visualizations and the collaboration graph are hosted on the same domain (for 
@@ -26,7 +28,8 @@ settings in that file. The current configuration options are:
   on the server. This can remain the default `.` to work just fine.
 - `lower_names`: An array of strings with parts of person (family) names that 
   should remain lowercased when trying to search a person through its encrypted 
-  variant.
+  variant. Common Dutch family name affixes (tussenvoegsels) are kept lowercase 
+  by the default value.
 
 ## Data
 
@@ -48,7 +51,7 @@ a minimized bundle. The resulting HTML, CSS and JavaScript is made available in
 the `public` directory.
 
 This repository also contains a `Dockerfile` specification for a Docker image 
-that can performs the installation of the app and dependencies, which allows 
+that can perform the installation of the app and dependencies, which allows 
 building the visualization within there. Additionally, a `Jenkinsfile` contains 
 appropriate steps for a Jenkins CI deployment, including data collection and 
 visualization building.
