@@ -70,7 +70,7 @@ pipeline {
             }
             agent {
                 docker {
-                    image '$DOCKER_REGISTRY/gros-data-analysis-dashboard'
+                    image "${env.DOCKER_REGISTRY}/gros-data-analysis-dashboard"
                     reuseNode true
                 }
             }
@@ -91,7 +91,7 @@ pipeline {
             }
             agent {
                 docker {
-                    image '$DOCKER_REGISTRY/gros-collaboration-graph:$IMAGE_TAG'
+                    image "${env.DOCKER_REGISTRY}/gros-collaboration-graph:${env.IMAGE_TAG}"
                     reuseNode true
                 }
             }
