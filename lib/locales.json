@@ -24,6 +24,7 @@
             "toggle-extern-title": "Exclude external people from the graph",
             "search-placeholder": "Search by name",
             "search-title": "Search a project or person by their common name",
+            "search-title-anonymous": "Search a project by their anonymized identifier",
             "search-invalid": "Enter a valid name",
             "title": "Collaboration Graph"
         }
@@ -53,6 +54,7 @@
             "toggle-extern-title": "Externe personen weglaten uit de graaf",
             "search-placeholder": "Zoek op naam",
             "search-title": "Een project or persoon opzoeken op hun normale naam",
+            "search-title-anonymous": "Een project opzoeken op hun geanonimiseerde identificatiecode",
             "search-invalid": "Vul een geldige naam in",
             "title": "Samenwerkingsgraaf"
         }
