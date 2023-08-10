@@ -21,8 +21,12 @@
 }
 
 #properties {
-    position: absolute;
     margin: 0 5px 0 5px;
+}
+@include from($tablet) {
+    #properties {
+        position: absolute;
+    }
 }
 
 svg#graph {
@@ -31,11 +35,24 @@ svg#graph {
     height: 100%;
 }
 #container {
-    width: 72.5vw;
     height: 80vh;
-    margin: 0 auto;
+    width: 100vw;
     box-shadow: 2px 1px 5px #ccc;
+    margin: 5px;
     border-radius: 3px;
+}
+@include from($tablet) {
+    #container {
+        width: 80vw;
+        margin-left: auto;
+    }
+}
+@include from($desktop) {
+    #container {
+        width: 72.5vw;
+        margin-left: auto;
+        margin-right: auto;
+    }
 }
 
 svg.legend {
